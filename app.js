@@ -28,6 +28,8 @@ function renderTodo(todo, index) {
   deleteBtn.textContent = "Rimuovi";
   deleteBtn.classList.add("remove-btn");
   deleteBtn.addEventListener("click", () => {
+    let confirmDelete = confirm("Sei sicuro di voler rimuovere questo todo?");
+    if (!confirmDelete) return;
     todos.splice(index, 1);
     saveTodos();
     renderList();

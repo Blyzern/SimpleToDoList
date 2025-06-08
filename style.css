@@ -5,13 +5,12 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-
   height: 100vh;
 }
 
 .container {
   width: 35vw;
-  max-width: 600px;
+  max-width: 750px;
   min-width: 300px;
   margin: 50px auto;
   background: #fff;
