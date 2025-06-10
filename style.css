@@ -6,6 +6,7 @@ body {
   display: flex;
   justify-content: center;
   height: 100vh;
+  color: #e6e6e6;
 }
 
 .container {
@@ -36,14 +37,14 @@ input[type="text"] {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  color: #ccc;
+  color: #e6e6e6;
   background-color: #252525;
 }
 
 button {
   padding: 10px 20px;
   background-color: #4caf50;
-  color: white;
+  color: #e6e6e6;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -67,7 +68,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #ccc;
+  color: #e6e6e6;
   background-color: #252525;
   padding: 10px;
   border-bottom: 1px solid #ddd;
@@ -90,7 +91,7 @@ input[type="checkbox"] {
 
 button.remove-btn {
   background-color: #e74c3c;
-  color: white;
+  color: #e6e6e6;
 }
 
 button.remove-btn:hover {
@@ -119,7 +120,7 @@ form.remove-form {
   border-radius: 5px;
 }
 p.remove-text {
-  color: white;
+  color: #e6e6e6;
   font-size: 1.2rem;
   margin: 1rem 1rem 0.5rem 1rem;
   text-align: center;

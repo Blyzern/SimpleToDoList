@@ -107,7 +107,9 @@ const renderTodo = (todo, index) => {
 
 // Funzione per renderizzare la lista dei ToDo
 const renderList = () => {
-  list.innerHTML = "";
+  isEmpty()
+    ? (list.innerHTML = "")
+    : (list.innerHTML = "Nessuna attività da fare.");
   completedList.innerHTML = "";
   completedCheck();
   todos.forEach((todo, index) => renderTodo(todo, index));
@@ -127,6 +129,13 @@ const completedCheck = () => {
     completedListHeader.style.visibility = "hidden";
     completedListHeader.style.position = "absolute";
   }
+  return bShouldShowCompleted;
+};
+
+// Controlla se la lista dei ToDo contiene elementi non completati
+const isEmpty = () => {
+  const bIsEmpty = todos.some((todo) => !todo.completed);
+  return bIsEmpty;
 };
 
 // Aggiungere un evento al form per aggiungere un nuovo ToDo
