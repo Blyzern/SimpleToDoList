@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f3f3f3;
+  background-color: #525252;
   margin: 0;
   padding: 0;
   display: flex;
@@ -13,16 +13,16 @@ body {
   max-width: 750px;
   min-width: 300px;
   margin: 50px auto;
-  background: #fff;
+  background: #252525;
   padding: 2em;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgb(255, 255, 255);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   height: fit-content;
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #e6e6e6;
 }
 
 form {
@@ -36,6 +36,8 @@ input[type="text"] {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  color: #ccc;
+  background-color: #252525;
 }
 
 button {
@@ -65,7 +67,8 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fafafa;
+  color: #ccc;
+  background-color: #252525;
   padding: 10px;
   border-bottom: 1px solid #ddd;
   border-radius: 5px;
@@ -92,4 +95,70 @@ button.remove-btn {
 
 button.remove-btn:hover {
   background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    padding: 1em;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  input[type="text"] {
+    width: calc(100% - 120px);
+  }
+
+  button {
+    width: 100px;
+  }
+}
+
+div.remove-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #33333373;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+form.remove-form {
+  width: fit-content;
+  height: fit-content;
+  min-width: 25vw;
+  background-color: #1b1b1be7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+p.remove-text {
+  color: white;
+  font-size: 1.2rem;
+  margin: 1rem 1rem 0.5rem 1rem;
+  text-align: center;
+}
+button.confirm-delete-btn {
+  width: 3rem;
+  color: black;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: rgb(182, 182, 182);
+}
+
+button.confirm-delete-btn:hover {
+  background-color: #a1a1a1;
+}
+
+div.remove-btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }

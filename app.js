@@ -1,3 +1,4 @@
+const body = document.querySelector("body");
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
@@ -28,11 +29,56 @@ function renderTodo(todo, index) {
   deleteBtn.textContent = "Rimuovi";
   deleteBtn.classList.add("remove-btn");
   deleteBtn.addEventListener("click", () => {
-    let confirmDelete = confirm("Sei sicuro di voler rimuovere questo todo?");
-    if (!confirmDelete) return;
-    todos.splice(index, 1);
-    saveTodos();
-    renderList();
+    const todoText = todos[index].text;
+
+    const deleteDiv = document.createElement("div");
+    deleteDiv.classList.add("remove-container");
+    deleteDiv.addEventListener("click", (e) => {
+      if (e.target === deleteDiv) {
+        deleteDiv.remove();
+      }
+    });
+
+    const confirmForm = document.createElement("form");
+    confirmForm.classList.add("remove-form");
+
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("remove-btn-container");
+
+    const closeBtn = document.createElement("button");
+    closeBtn.classList.add("confirm-delete-btn");
+    closeBtn.textContent = "No";
+
+    const confirmText = document.createElement("p");
+    confirmText.classList.add("remove-text");
+    confirmText.textContent = `Sei sicuro di voler rimuovere: "${todoText}"?`;
+
+    const confirmYes = document.createElement("button");
+    confirmYes.classList.add("confirm-delete-btn");
+    confirmYes.type = "submit";
+    confirmYes.textContent = "Sì";
+
+    body.appendChild(deleteDiv);
+    deleteDiv.appendChild(confirmForm);
+    confirmForm.appendChild(confirmText);
+    confirmForm.appendChild(btnContainer);
+    btnContainer.appendChild(confirmYes);
+    btnContainer.appendChild(closeBtn);
+
+    confirmYes.addEventListener("click", (e) => {
+      e.preventDefault();
+      todos.splice(index, 1);
+      saveTodos();
+      renderList();
+      deleteDiv.remove();
+    });
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      deleteDiv.remove();
+    });
+    // todos.splice(index, 1);
+    // saveTodos();
+    // renderList();
   });
 
   const actionsDiv = document.createElement("div");
