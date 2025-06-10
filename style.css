@@ -143,6 +143,15 @@ div.remove-btn-container {
   gap: 1rem;
 }
 
+h2.completed-header {
+  visibility: hidden;
+  position: absolute;
+}
+ul.completed-list {
+  visibility: hidden;
+  position: absolute;
+}
+
 @media (max-width: 600px) {
   .container {
     width: 90%;
