@@ -8,7 +8,7 @@
   </head>
   <body>
     <main class="container">
-      <h1>La mia ToDo List</h1>
+      <h1>ToDo List</h1>
       <form id="todo-form">
         <input
           type="text"
@@ -19,7 +19,15 @@
         />
         <button type="submit">Aggiungi</button>
       </form>
+      <h2>Attività</h2>
       <ul id="todo-list"></ul>
+      <h2 id="completed-header" style="visibility: hidden; position: absolute">
+        Completate
+      </h2>
+      <ul
+        id="completed-list"
+        style="visibility: hidden; position: absolute"
+      ></ul>
     </main>
     <script src="app.js"></script>
   </body>

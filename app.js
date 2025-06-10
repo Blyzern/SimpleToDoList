@@ -1,21 +1,26 @@
+// creare variabili per gli elementi del DOM
 const body = document.querySelector("body");
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
+const completedList = document.getElementById("completed-list");
+const completedListHeader = document.getElementById("completed-header");
 
+// Inizializzare ToDO oppure settare un array vuoto se non esiste
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-function saveTodos() {
+// Funzione per salvare i ToDo nell'archiviazione locale
+const saveTodos = () => {
   localStorage.setItem("todos", JSON.stringify(todos));
-}
+};
 
-function renderTodo(todo, index) {
+const renderTodo = (todo, index) => {
+  // Creare gli elementi per ogni ToDo
   const li = document.createElement("li");
-  if (todo.completed) li.classList.add("completed");
-
   const span = document.createElement("span");
   span.textContent = todo.text;
 
+  // Aggiungere la classe "todo" per lo stile
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = todo.completed;
@@ -25,12 +30,14 @@ function renderTodo(todo, index) {
     renderList();
   });
 
+  // Creare il pulsante per rimuovere il ToDo
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Rimuovi";
   deleteBtn.classList.add("remove-btn");
   deleteBtn.addEventListener("click", () => {
     const todoText = todos[index].text;
 
+    // Creare un div per la conferma di rimozione
     const deleteDiv = document.createElement("div");
     deleteDiv.classList.add("remove-container");
     deleteDiv.addEventListener("click", (e) => {
@@ -39,6 +46,7 @@ function renderTodo(todo, index) {
       }
     });
 
+    // Creare un form per la conferma di rimozione
     const confirmForm = document.createElement("form");
     confirmForm.classList.add("remove-form");
 
@@ -58,6 +66,7 @@ function renderTodo(todo, index) {
     confirmYes.type = "submit";
     confirmYes.textContent = "Sì";
 
+    // Aggiungere gli elementi al DOM
     body.appendChild(deleteDiv);
     deleteDiv.appendChild(confirmForm);
     confirmForm.appendChild(confirmText);
@@ -76,11 +85,9 @@ function renderTodo(todo, index) {
       e.preventDefault();
       deleteDiv.remove();
     });
-    // todos.splice(index, 1);
-    // saveTodos();
-    // renderList();
   });
 
+  // Aggiungere gli elementi al ToDo
   const actionsDiv = document.createElement("div");
   actionsDiv.classList.add("actions");
   actionsDiv.appendChild(checkbox);
@@ -88,14 +95,41 @@ function renderTodo(todo, index) {
 
   li.appendChild(span);
   li.appendChild(actionsDiv);
-  list.appendChild(li);
-}
+  if (todo.completed) {
+    li.classList.add("completed");
+    completedList.appendChild(li);
+    completedList.style.visibility = "visible";
+    completedListHeader.style.visibility = "visible";
+  } else {
+    list.appendChild(li);
+  }
+};
 
-function renderList() {
+// Funzione per renderizzare la lista dei ToDo
+const renderList = () => {
   list.innerHTML = "";
+  completedList.innerHTML = "";
+  completedCheck();
   todos.forEach((todo, index) => renderTodo(todo, index));
-}
+};
 
+// Funzione per mostrare o nascondere la lista dei ToDo completati
+const completedCheck = () => {
+  const bShouldShowCompleted = todos.some((todo) => todo.completed);
+  if (bShouldShowCompleted) {
+    completedList.style.visibility = "visible";
+    completedList.style.position = "relative";
+    completedListHeader.style.visibility = "visible";
+    completedListHeader.style.position = "relative";
+  } else {
+    completedList.style.visibility = "hidden";
+    completedList.style.position = "absolute";
+    completedListHeader.style.visibility = "hidden";
+    completedListHeader.style.position = "absolute";
+  }
+};
+
+// Aggiungere un evento al form per aggiungere un nuovo ToDo
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = input.value.trim();
