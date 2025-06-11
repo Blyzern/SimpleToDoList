@@ -7,14 +7,40 @@ const completedList = document.getElementById("completed-list");
 const completedListHeader = document.getElementById("completed-header");
 
 // Inizializzare ToDO oppure settare un array vuoto se non esiste
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
+let todos = [];
+try {
+  todos = JSON.parse(localStorage.getItem("todos")) || [];
+} catch {
+  // Se c'è un errore nel parsing, inizializza come array vuoto
+  todos = [];
+}
 
 // Funzione per salvare i ToDo nell'archiviazione locale
 const saveTodos = () => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
+const setVisibility = (e, visible) => {
+  e.style.visibility = visible ? "visible" : "hidden";
+  e.style.position = visible ? "relative" : "absolute";
+};
+
+// Funzione per mostrare o nascondere la lista dei ToDo completati
+const completedCheck = () => {
+  const bShouldShowCompleted = todos.some((todo) => todo.completed);
+  setVisibility(completedList, bShouldShowCompleted);
+  setVisibility(completedListHeader, bShouldShowCompleted);
+  return bShouldShowCompleted;
+};
+
+// Controlla se la lista dei ToDo contiene elementi non completati
+const isEmpty = () => {
+  const bIsEmpty = todos.some((todo) => !todo.completed);
+  return bIsEmpty;
+};
+
 const renderTodo = (todo, index) => {
+  const currentTodo = todos[index];
   // Creare gli elementi per ogni ToDo
   const li = document.createElement("li");
   const span = document.createElement("span");
@@ -25,7 +51,7 @@ const renderTodo = (todo, index) => {
   checkbox.type = "checkbox";
   checkbox.checked = todo.completed;
   checkbox.addEventListener("change", () => {
-    todos[index].completed = !todos[index].completed;
+    currentTodo.completed = !currentTodo.completed;
     saveTodos();
     renderList();
   });
@@ -35,7 +61,7 @@ const renderTodo = (todo, index) => {
   deleteBtn.textContent = "Rimuovi";
   deleteBtn.classList.add("remove-btn");
   deleteBtn.addEventListener("click", () => {
-    const todoText = todos[index].text;
+    const todoText = currentTodo.text;
 
     // Creare un div per la conferma di rimozione
     const deleteDiv = document.createElement("div");
@@ -107,35 +133,14 @@ const renderTodo = (todo, index) => {
 
 // Funzione per renderizzare la lista dei ToDo
 const renderList = () => {
-  isEmpty()
+  list.innerHTML = "";
+  list.textContent = isEmpty()
     ? (list.innerHTML = "")
-    : (list.innerHTML = "Nessuna attività da fare.");
+    : (list.innerHTML = "Nessuna attività da completare.");
+
   completedList.innerHTML = "";
   completedCheck();
   todos.forEach((todo, index) => renderTodo(todo, index));
-};
-
-// Funzione per mostrare o nascondere la lista dei ToDo completati
-const completedCheck = () => {
-  const bShouldShowCompleted = todos.some((todo) => todo.completed);
-  if (bShouldShowCompleted) {
-    completedList.style.visibility = "visible";
-    completedList.style.position = "relative";
-    completedListHeader.style.visibility = "visible";
-    completedListHeader.style.position = "relative";
-  } else {
-    completedList.style.visibility = "hidden";
-    completedList.style.position = "absolute";
-    completedListHeader.style.visibility = "hidden";
-    completedListHeader.style.position = "absolute";
-  }
-  return bShouldShowCompleted;
-};
-
-// Controlla se la lista dei ToDo contiene elementi non completati
-const isEmpty = () => {
-  const bIsEmpty = todos.some((todo) => !todo.completed);
-  return bIsEmpty;
 };
 
 // Aggiungere un evento al form per aggiungere un nuovo ToDo
@@ -150,4 +155,5 @@ form.addEventListener("submit", (e) => {
   }
 });
 
+// Inizializzare la lista dei ToDo al caricamento della pagina
 renderList();
