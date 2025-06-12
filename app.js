@@ -134,12 +134,14 @@ const renderTodo = (todo, index) => {
 // Funzione per renderizzare la lista dei ToDo
 const renderList = () => {
   list.innerHTML = "";
-  list.textContent = isEmpty()
-    ? (list.innerHTML = "")
-    : (list.innerHTML = "Nessuna attività da completare.");
-
   completedList.innerHTML = "";
+
+  if (isEmpty()) {
+    list.textContent = "Nessuna attività da completare.";
+  }
+
   completedCheck();
+
   todos.forEach((todo, index) => renderTodo(todo, index));
 };
 
